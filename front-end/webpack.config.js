@@ -1,5 +1,25 @@
-const webpack = require('webpack')
 const path = require('path')
+
+const webpack = require('webpack')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
+
+plugins = [
+    new ExtractTextPlugin('style.css'),  
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      template: path.join(__dirname, 'src/index.html')
+    })
+ ]
+
+if(process.env.NODE_ENV === 'production'){
+  plugins.push(new webpack.DefinePlugin({
+    "process.env": {NODE_ENV: JSON.stringify(process.env.NODE.ENV)}
+  }))
+  plugins.push(new webpack.optimize.UglifyJsPlugin())
+}
+
 
 module.exports = {
   entry: path.join(__dirname, 'src/index.jsx'),
@@ -10,8 +30,10 @@ module.exports = {
   resolve: {
     extensions: [".js", ".jsx"]
   },
-  module:{
-    rules: [{
+  plugins: plugins,
+ module:{
+   rules: [
+   {
       test: /.jsx?$/,
       exclude: /node_modules/,
       include: path.join(__dirname, 'src'),
@@ -21,10 +43,24 @@ module.exports = {
           presets: ['es2015', 'react']
         }
       }]
-    }]
+    },
+    {
+      test: /\.(jpe?g|ico|png|gif|svg)$/i,
+      loader: 'file-loader?name=img/[name].[ext]'
+    },
+    {
+      test: /\.css$/,
+      use: ExtractTextPlugin.extract({
+        fallback: "style-loader",
+        use: "css-loader"
+      })
+    }
+  ]  
   },
   devServer: {
     publicPath: '/',
     contentBase: './dist'
   }
 }
+
+
