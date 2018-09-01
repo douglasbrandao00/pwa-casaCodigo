@@ -1,8 +1,16 @@
 import React from 'react'
 
-class NewUser() extends React.Component {
+import Label from '../Label'
+
+class NewUser extends React.Component {
   render() {
-    return (<div className="center"></div>)
+    return (
+      <div className="center">
+        <form className="pure-form pure-form-stacked">
+          <Label htmlFor="name" text="Quem é você?" invalidValue/>
+        </form>
+      </div>
+    )
   }
 }
 

@@ -1,8 +1,16 @@
 import React from 'react'
 
+import Header from './Header/'
+import NewUser from './NewUser/'
+
 class App extends React.Component {
   render() {
-    return (<h1>Component</h1>)
+    return (
+      <div>
+        <Header />
+        <NewUser />
+      </div>
+    )
   }
 }
 

@@ -5,9 +5,8 @@ import './img/favicon.ico'
 import './css/index.css'
 
 import App from './components/app.jsx'
-import Header from './components/Header/index.jsx'
 
 ReactDOM.render(
-  <Header />,
+  <App />,
   document.querySelector("#main")
 )
